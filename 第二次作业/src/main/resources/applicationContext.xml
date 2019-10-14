@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+
+	<bean name="userDao" class="dao.UserDaoImpl"/>
+	<bean name="userService" class="service.UserServiceImpl">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+	
+	<bean name="Demo" class="boss.Demo">
+		<property name="userService" ref="userService"></property>
+	</bean>
+
+	<bean name="car1" class="pojo.Car" scope="prototype">
+		<property name="brand" value="玛莎拉蒂"></property>
+		<property name="color" value="红色"></property>
+		<property name="displacement" value="2.5L"></property>
+	</bean>
+	
+	<bean name="car2" class="pojo.Car" scope="prototype">
+		<property name="brand" value="林肯"></property>
+		<property name="color" value="黑色"></property>
+		<property name="displacement" value="2.0L"></property>
+	</bean>
+
+	<bean name="boss1" class="pojo.Boss" scope="prototype">
+		<property name="name" value="enzo"></property>
+		<property name="hobby" value="高尔夫球"></property>
+		<property name="company" value="ari"></property>
+		<property name="car" ref="car1"></property>
+	</bean>
+	
+	<bean name="boss2" class="pojo.Boss" scope="prototype">
+		<property name="name" value="Damon"></property>
+		<property name="hobby" value="Wringneck"></property>
+		<property name="car" ref="car2"></property>
+		<property name="company" value="elanna"></property>
+	</bean>
+
+	<bean name="meeting" class="pojo.Meeting">
+		<property name="theme" value="killing"></property>
+		<property name="boss">
+			<array>
+				<ref bean="boss1"/>
+				<ref bean="boss2"/>
+			</array>
+		</property>
+	</bean>
+	
+	<!-- 开启注解配置 -->
+	<context:component-scan base-package="dao,service"></context:component-scan>
+	
+	
+</beans>
